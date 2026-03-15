@@ -1,5 +1,6 @@
 import { api } from '../lib/api';
 import type { Order } from '../context';
+import { ALL_CITIES_KEY } from '../data/cities';
 
 const USE_API = !!process.env.EXPO_PUBLIC_API_URL;
 
@@ -45,7 +46,8 @@ export async function getCourierDeliveryFee(): Promise<number | null> {
 
 export async function getAvailableOrders(city?: string): Promise<Order[]> {
   if (!USE_API) return [];
-  const path = city ? `/orders/available?city=${encodeURIComponent(city)}` : '/orders/available';
+  const cityFilter = city && city !== ALL_CITIES_KEY ? city : undefined;
+  const path = cityFilter ? `/orders/available?city=${encodeURIComponent(cityFilter)}` : '/orders/available';
   const [list, courierFee] = await Promise.all([
     api.get<Record<string, unknown>[]>(path),
     getCourierDeliveryFee(),

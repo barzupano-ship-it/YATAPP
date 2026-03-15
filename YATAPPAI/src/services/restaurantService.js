@@ -1,4 +1,5 @@
 import { api, getApiBase } from '../lib/api';
+import { ALL_CITIES_KEY } from '../data/cities';
 
 const USE_API = !!process.env.EXPO_PUBLIC_API_URL;
 
@@ -11,7 +12,8 @@ function resolveImageUrl(url, base) {
 
 export async function getRestaurants(city) {
   if (!USE_API) return [];
-  const url = city ? `/restaurants?city=${encodeURIComponent(city)}` : '/restaurants';
+  const cityFilter = city && city !== ALL_CITIES_KEY ? city : undefined;
+  const url = cityFilter ? `/restaurants?city=${encodeURIComponent(cityFilter)}` : '/restaurants';
   const data = await api.get(url);
   const list = Array.isArray(data) ? data : [];
   const base = getApiBase();

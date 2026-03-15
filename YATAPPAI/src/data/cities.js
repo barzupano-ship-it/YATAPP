@@ -1,5 +1,8 @@
 /** Cities of Tajikistan - for city selection (sorted by population) */
+export const ALL_CITIES_KEY = 'Все города';
+
 export const CITIES_TAJIKISTAN = [
+  ALL_CITIES_KEY,
   'Душанбе',
   'Худжанд',
   'Бохтар',

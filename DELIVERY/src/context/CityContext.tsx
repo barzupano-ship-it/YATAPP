@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CITIES_TAJIKISTAN } from '../data/cities';
+import { CITIES_TAJIKISTAN, ALL_CITIES_KEY } from '../data/cities';
 
 const STORAGE_KEY = '@delivery_selected_city';
 
@@ -14,7 +14,7 @@ interface CityContextType {
 const CityContext = createContext<CityContextType | null>(null);
 
 export function CityProvider({ children }: { children: React.ReactNode }) {
-  const [city, setCityState] = useState(CITIES_TAJIKISTAN[0]);
+  const [city, setCityState] = useState(ALL_CITIES_KEY);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { ImageUpload } from "@/components/ui/ImageUpload";
+import { CitySelect } from "@/components/ui/CitySelect";
 import { restaurantService, Restaurant } from "@/services/restaurant.service";
 import { authService } from "@/services/auth.service";
 import { useTranslation } from "@/i18n/context";
 import { useRestaurantId } from "@/hooks/useRestaurant";
-import { CITIES_TAJIKISTAN } from "@/data/cities";
 
 function getDeliveryMinutes(value?: string | number): number | undefined {
   if (typeof value === "number" && Number.isFinite(value)) return value;
@@ -219,6 +219,25 @@ export function RestaurantSettingsPage() {
               placeholder={t("settings.descriptionPlaceholder")}
               rows={4}
             />
+            <Input
+              label={t("settings.cuisine")}
+              value={form.cuisine ?? ""}
+              onChange={(e) => setForm({ ...form, cuisine: e.target.value || undefined })}
+              placeholder={t("settings.cuisinePlaceholder")}
+            />
+            <Input
+              label={t("auth.phone")}
+              value={form.phone ?? ""}
+              onChange={(e) => setForm({ ...form, phone: e.target.value || undefined })}
+              placeholder="+992 90 123 4567"
+            />
+            <Input
+              type="email"
+              label={t("auth.email")}
+              value={form.email ?? ""}
+              onChange={(e) => setForm({ ...form, email: e.target.value || undefined })}
+              placeholder="restaurant@example.com"
+            />
           </div>
         </Card>
 
@@ -254,25 +273,13 @@ export function RestaurantSettingsPage() {
               placeholder="123 Main Street, City, State"
               required
             />
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-700">
-                {t("settings.city")}
-              </label>
-              <select
-                value={form.city ?? ""}
-                onChange={(e) =>
-                  setForm({ ...form, city: e.target.value || undefined })
-                }
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-              >
-                <option value="">{t("settings.selectCity")}</option>
-                {CITIES_TAJIKISTAN.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <CitySelect
+              value={form.city}
+              onChange={(city) => setForm({ ...form, city })}
+              label={t("settings.city")}
+              selectCityPlaceholder={t("settings.selectCity")}
+              searchPlaceholder={t("settings.searchCity")}
+            />
             <Input
               label={t("settings.deliveryTime")}
               value={form.deliveryTime ?? ""}
@@ -280,6 +287,28 @@ export function RestaurantSettingsPage() {
                 setForm({ ...form, deliveryTime: e.target.value })
               }
               placeholder={t("settings.deliveryTimePlaceholder")}
+            />
+            <Input
+              label={t("settings.openingHours")}
+              value={form.openingHours ?? ""}
+              onChange={(e) =>
+                setForm({ ...form, openingHours: e.target.value || undefined })
+              }
+              placeholder={t("settings.openingHoursPlaceholder")}
+            />
+            <Input
+              label={t("settings.deliveryRadius")}
+              type="number"
+              value={form.deliveryRadius != null ? String(form.deliveryRadius) : ""}
+              onChange={(e) => {
+                const v = e.target.value.trim();
+                const num = v ? Number(v) : undefined;
+                setForm({
+                  ...form,
+                  deliveryRadius: num != null && num > 0 ? num : undefined,
+                });
+              }}
+              placeholder={t("settings.deliveryRadiusPlaceholder")}
             />
             <div className="space-y-3 rounded-xl border border-slate-200 p-4">
               <Input
