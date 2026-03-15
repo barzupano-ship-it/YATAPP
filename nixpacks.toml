@@ -1,0 +1,1 @@
+# Root: do NOT set DATABASE_URL here - Railway injects it at runtime from yatapp-db
