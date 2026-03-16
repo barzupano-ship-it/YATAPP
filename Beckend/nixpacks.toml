@@ -1,6 +1,7 @@
 # Beckend: full build with Prisma
+# Dummy DATABASE_URL for build - Railway injects real one at runtime
 [phases.build]
-cmds = ["npm install && npx prisma generate && npm run build"]
+cmds = ["npm install && DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy npm run build"]
 
 [start]
 cmd = "npx prisma migrate deploy && npm start"
