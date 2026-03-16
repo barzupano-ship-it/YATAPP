@@ -1,1 +1,7 @@
-# Root: do NOT set DATABASE_URL here - Railway injects it at runtime from yatapp-db
+# Root: build Beckend for Railway
+# DATABASE_URL dummy for build only - Railway injects real one at runtime
+[phases.build]
+cmds = ["npm install && DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy npm run build"]
+
+[start]
+cmd = "npm start"
