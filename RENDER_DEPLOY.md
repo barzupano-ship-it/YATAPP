@@ -55,12 +55,20 @@ git push -u origin main
 
 (Подставьте реальный URL бэкенда из Render Dashboard.)
 
-### yatapp-backend
+### yatapp-backend (ВАЖНО: DATABASE_URL)
 
-Обычно задаётся через Blueprint. Если нужно, проверьте:
+**Если видите ошибку "Environment variable not found: DATABASE_URL":**
 
-- `JWT_SECRET` — сгенерирован автоматически
-- `DATABASE_URL` — берётся из PostgreSQL
+1. Убедитесь, что в проекте есть **PostgreSQL** (yatapp-db).
+2. В Render Dashboard: **yatapp-backend** → **Environment**.
+3. Добавьте `DATABASE_URL`:
+   - Если есть база yatapp-db: нажмите **Add Environment Variable** → **Add from Database** → выберите **yatapp-db** → **Internal Database URL** (или **Connection String**).
+   - Если базы нет: **New** → **PostgreSQL**, создайте базу, затем подключите её к yatapp-backend через **Add from Database**.
+4. Сохраните и нажмите **Manual Deploy** → **Deploy latest commit**.
+
+### Остальные переменные yatapp-backend
+
+- `JWT_SECRET` — сгенерирован автоматически (или задайте вручную)
 - `CORS_ORIGIN` — `*` или список доменов фронтендов
 
 ---
